@@ -1,0 +1,23 @@
+@mixin ellipsis($max-width) {
+  max-width: $max-width;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin flexColumn() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin alignedFlex(
+  $display: flex,
+  $align-prop: items,
+  $align: center,
+  $justify-prop: content,
+  $justify: center
+) {
+  display: $display;
+  align-#{$align-prop}: $align;
+  justify-#{$justify-prop}: $justify;
+}
