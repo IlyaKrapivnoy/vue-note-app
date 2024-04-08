@@ -80,6 +80,32 @@ onMounted(() => {
   userName.value = localStorage.getItem("userName") || "";
   notesCounter.value = localStorage.getItem("notesCounter") || 0;
   notes.value = JSON.parse(localStorage.getItem("notes")) || [];
+
+  if (notes.value.length === 0) {
+    const defaultNotes = [
+      {
+        id: 1,
+        value: "The things you used to own, now they own you.",
+        date: "4/8/2024 2:35:26 PM",
+        username: "Chuck Palahniuk",
+      },
+      {
+        id: 2,
+        value:
+          "When did the future switch from being a promise to being a threat?",
+        date: "2/8/2024 4:35:26 PM",
+        username: "Chuck Palahniuk",
+      },
+      {
+        id: 2,
+        value: "We'll never be as young as we are tonight.",
+        date: "2/8/2024 4:35:26 PM",
+        username: "Chuck Palahniuk",
+      },
+    ];
+    notes.value.push(...defaultNotes);
+    notesCounter.value += defaultNotes.length;
+  }
 });
 
 const reset = () => {
