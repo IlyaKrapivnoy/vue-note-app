@@ -29,7 +29,7 @@
     </section>
 
     <section>
-      <ul class="note-list">
+      <ul v-if="notes.length > 0" class="note-list">
         <li v-for="(note, i) in notes" :key="note.id" class="note-item">
           <div class="button-wrapper">
             <button
@@ -46,6 +46,8 @@
           </div>
         </li>
       </ul>
+
+      <p v-else>No more notes</p>
     </section>
   </main>
 </template>
