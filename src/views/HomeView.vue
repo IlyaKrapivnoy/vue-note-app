@@ -8,7 +8,7 @@
       </div>
     </section>
     <section class="greeting-section">
-      <h2 class="title">
+      <span class="title">
         Enter your username:
         <input
           type="text"
@@ -16,7 +16,13 @@
           v-model="userName"
           class="username-input"
         />
-      </h2>
+        <button
+          @click="removeUsername"
+          class="button-regular button-danger button-small"
+        >
+          x
+        </button>
+      </span>
     </section>
 
     <section class="category-section">
@@ -151,6 +157,10 @@ const sortNotes = () => {
     if (a.category > b.category) return 1;
     return 0;
   });
+};
+
+const removeUsername = () => {
+  userName.value = "";
 };
 
 watch(
@@ -328,7 +338,7 @@ const toggleFavourite = (index) => {
 }
 
 .greeting-section {
-  margin-bottom: 40px;
+  margin: 40px 0;
 
   .username-input {
     margin-left: 10px;
