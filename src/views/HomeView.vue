@@ -285,6 +285,7 @@ const addNewNote = () => {
 
 const removeTodo = (i) => {
   notes.value.splice(i, 1);
+  notesCounter.value--;
 };
 
 const toggleEditMode = (index) => {
