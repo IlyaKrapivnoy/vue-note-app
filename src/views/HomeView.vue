@@ -2,7 +2,10 @@
   <main>
     <section class="top-section">
       <h1>My Notes</h1>
-      <span class="top-section_counter">Total notes: {{ notesCounter }}</span>
+      <div class="counter-row">
+        <span class="counter">Total notes: {{ notesCounter }}</span>
+        <button @click="reset" class="button-regular">reset</button>
+      </div>
     </section>
     <section class="greeting-section">
       <h2 class="title">
@@ -22,7 +25,7 @@
         placeholder="Enter your text here..."
         v-model="newNote"
       ></textarea>
-      <button @click.prevent="addNewNote" class="form-button">Submit</button>
+      <button @click.prevent="addNewNote" class="button-regular">Submit</button>
     </section>
     {{ notes }}
   </main>
@@ -48,6 +51,11 @@ onMounted(() => {
   userName.value = localStorage.getItem("userName") || "";
   notesCounter.value = localStorage.getItem("notesCounter") || 0;
 });
+
+const reset = () => {
+  notes.value = [];
+  notesCounter.value = 0;
+};
 
 const addNewNote = () => {
   if (newNote.value === "") {
@@ -83,8 +91,15 @@ const addNewNote = () => {
     font-weight: 900;
   }
 
-  .top-section_counter {
-    font-weight: 800;
+  .counter-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    .counter {
+      font-weight: 800;
+    }
   }
 }
 
@@ -117,19 +132,19 @@ const addNewNote = () => {
     resize: vertical;
     outline-color: #42b983;
   }
+}
 
-  .form-button {
-    background-color: #007bff;
-    color: #fff;
-    font-weight: 700;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+.button-regular {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 
-    &:hover {
-      background-color: #0056b3;
-    }
+  &:hover {
+    background-color: #0056b3;
   }
 }
 </style>
