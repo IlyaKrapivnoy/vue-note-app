@@ -47,10 +47,15 @@ onMounted(() => {
   notesCounter.value = localStorage.getItem("notesCounter") || 0;
 });
 
-function addNewNote() {
+const addNewNote = () => {
+  if (newNote.value === "") {
+    alert("Please, enter text before submitting a note");
+    return;
+  }
+
   console.log("newNote", newNote.value);
   newNote.value = "";
-}
+};
 </script>
 
 <style scoped lang="scss">
