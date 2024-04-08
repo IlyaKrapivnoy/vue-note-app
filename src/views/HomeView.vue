@@ -221,6 +221,7 @@ const removeTodo = (i) => {
 
 <style scoped lang="scss">
 @import "@/styles/variables.scss";
+@import "@/styles/mixins.scss";
 
 .top-section {
   padding-bottom: 20px;
@@ -232,9 +233,7 @@ const removeTodo = (i) => {
   }
 
   .counter-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include alignedFlex();
     gap: 20px;
 
     .counter {
@@ -270,8 +269,7 @@ const removeTodo = (i) => {
 }
 
 .form-section {
-  display: flex;
-  flex-direction: column;
+  @include flexColumn();
   align-items: center;
   margin-bottom: 40px;
 
@@ -333,17 +331,18 @@ const removeTodo = (i) => {
     background-color: #f9f9f9;
 
     .note-content {
-      min-height: 100px;
+      min-height: 50px;
+
+      h3 {
+        @include ellipsis(400px);
+      }
     }
 
     .note-details {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      @include alignedFlex($justify: space-between);
 
       .note-info {
-        display: flex;
-        flex-direction: column;
+        @include flexColumn();
         text-align: left;
       }
 
@@ -357,9 +356,7 @@ const removeTodo = (i) => {
 }
 
 .sort-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include alignedFlex();
   margin-bottom: 20px;
 
   label {
