@@ -69,6 +69,21 @@
         <li v-for="(note, i) in sortedNotes" :key="note.id" class="note-item">
           <div class="button-wrapper">
             <button
+              v-if="editIndex !== i"
+              @click="toggleEditMode(i)"
+              class="button-regular button-small"
+            >
+              Edit
+            </button>
+            <button
+              v-else
+              @click="saveEditedNote"
+              class="button-regular button-small button-success"
+            >
+              Save
+            </button>
+            <button
+              v-if="editIndex !== i"
               @click="removeTodo(i)"
               class="button-regular button-danger button-small"
             >
@@ -76,7 +91,10 @@
             </button>
           </div>
           <div class="note-content">
-            <h3>{{ note.value }}</h3>
+            <h3 v-if="editIndex === i">
+              <input v-model="editedNote" @keyup.enter="saveEditedNote" />
+            </h3>
+            <h3 v-else>{{ note.value }}</h3>
           </div>
           <div class="note-details">
             <div class="note-info">
@@ -102,6 +120,8 @@ const newNote = ref("");
 const notes = ref([]);
 const selectedCategory = ref("work");
 const sortBy = ref("all");
+const editIndex = ref(null);
+const editedNote = ref("");
 
 const sortedNotes = computed(() => {
   if (sortBy.value === "all") {
@@ -218,6 +238,16 @@ const addNewNote = () => {
 const removeTodo = (i) => {
   notes.value.splice(i, 1);
 };
+
+const toggleEditMode = (index) => {
+  editIndex.value = index;
+  editedNote.value = notes.value[index].value;
+};
+
+const saveEditedNote = () => {
+  notes.value[editIndex.value].value = editedNote.value;
+  editIndex.value = null;
+};
 </script>
 
 <style scoped lang="scss">
@@ -309,6 +339,14 @@ const removeTodo = (i) => {
   }
 }
 
+.button-success {
+  background-color: $primary-color;
+
+  &:hover {
+    background-color: #269663;
+  }
+}
+
 .button-small {
   padding: 4px 10px;
 }
@@ -316,10 +354,10 @@ const removeTodo = (i) => {
 .button-wrapper {
   display: flex;
   justify-content: flex-end;
+  gap: 10px;
 }
 
 .note-list {
-  list-style: none;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
