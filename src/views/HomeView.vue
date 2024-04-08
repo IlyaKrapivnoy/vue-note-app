@@ -123,6 +123,11 @@ const addNewNote = () => {
     return;
   }
 
+  if (userName.value === "") {
+    alert("Please, enter your name");
+    return;
+  }
+
   for (let i = 0; i < notes.value.length; i++) {
     if (newNote.value === notes.value[i].value) {
       alert("You already have this task");
