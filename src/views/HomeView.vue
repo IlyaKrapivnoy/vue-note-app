@@ -4,7 +4,7 @@
       <h1>My Notes</h1>
       <div class="counter-row">
         <span class="counter">Total notes: {{ notesCounter }}</span>
-        <button @click="reset" class="button-regular">reset</button>
+        <button @click="reset" class="button-regular">Reset</button>
       </div>
     </section>
     <section class="greeting-section">
@@ -30,7 +30,15 @@
 
     <section>
       <ul class="note-list">
-        <li v-for="note in notes" :key="note.id" class="note-item">
+        <li v-for="(note, i) in notes" :key="note.id" class="note-item">
+          <div class="button-wrapper">
+            <button
+              @click="removeTodo(i)"
+              class="button-regular button-danger button-small"
+            >
+              x
+            </button>
+          </div>
           <h3>{{ note.value }}</h3>
           <div class="note-details">
             <span class="note-date">{{ note.date }}</span>
@@ -107,6 +115,10 @@ const addNewNote = () => {
 
   newNote.value = "";
 };
+
+const removeTodo = (i) => {
+  notes.value.splice(i, 1);
+};
 </script>
 
 <style scoped lang="scss">
@@ -170,10 +182,28 @@ const addNewNote = () => {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3s ease 0s;
 
   &:hover {
     background-color: #0056b3;
   }
+}
+
+.button-danger {
+  background-color: #ff3753;
+
+  &:hover {
+    background-color: #de2a46;
+  }
+}
+
+.button-small {
+  padding: 4px 10px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .note-list {
