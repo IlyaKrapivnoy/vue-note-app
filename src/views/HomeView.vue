@@ -19,6 +19,33 @@
       </h2>
     </section>
 
+    <section class="category-section">
+      <label>
+        <input
+          type="radio"
+          name="category"
+          id="work"
+          value="work"
+          v-model="selectedCategory"
+          class="category-item"
+        />
+        <span class="bubble business"></span>
+        <div>Work</div>
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="category"
+          id="personal"
+          value="personal"
+          v-model="selectedCategory"
+          class="category-item"
+        />
+        <span class="bubble business"></span>
+        <div>Personal</div>
+      </label>
+    </section>
+
     <section class="form-section">
       <textarea
         class="form-textarea"
@@ -39,9 +66,14 @@
               x
             </button>
           </div>
-          <h3>{{ note.value }}</h3>
+          <div class="note-content">
+            <h3>{{ note.value }}</h3>
+          </div>
           <div class="note-details">
-            <span class="note-date">{{ note.date }}</span>
+            <div class="note-info">
+              <span class="note-category">{{ note.category }}</span>
+              <span class="note-date">{{ note.date }}</span>
+            </div>
             <span class="note-username">{{ note.username }}</span>
           </div>
         </li>
@@ -59,6 +91,7 @@ const notesCounter = ref(0);
 const userName = ref("");
 const newNote = ref("");
 const notes = ref([]);
+const selectedCategory = ref("work");
 
 watch(
   notes,
@@ -90,6 +123,7 @@ onMounted(() => {
         value: "The things you used to own, now they own you.",
         date: "4/8/2024 2:35:26 PM",
         username: "Chuck Palahniuk",
+        category: "personal",
       },
       {
         id: 2,
@@ -97,12 +131,14 @@ onMounted(() => {
           "When did the future switch from being a promise to being a threat?",
         date: "2/8/2024 4:35:26 PM",
         username: "Chuck Palahniuk",
+        category: "personal",
       },
       {
         id: 2,
         value: "We'll never be as young as we are tonight.",
         date: "2/8/2024 4:35:26 PM",
         username: "Chuck Palahniuk",
+        category: "personal",
       },
     ];
     notes.value.push(...defaultNotes);
@@ -142,6 +178,7 @@ const addNewNote = () => {
     value: newNote.value,
     date: `${formattedDate} ${formattedTime}`,
     username: userName.value,
+    category: selectedCategory.value,
   });
 
   notesCounter.value++;
@@ -191,10 +228,23 @@ const removeTodo = (i) => {
   }
 }
 
+.category-section {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
+
+  .category-item {
+    cursor: pointer;
+  }
+}
+
 .form-section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 40px;
+
   .form-textarea {
     width: 50%;
     min-height: 100px;
@@ -252,10 +302,20 @@ const removeTodo = (i) => {
     border-radius: 5px;
     background-color: #f9f9f9;
 
+    .note-content {
+      min-height: 100px;
+    }
+
     .note-details {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      .note-info {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
 
       .note-date,
       .note-username {
