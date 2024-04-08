@@ -55,9 +55,18 @@
       <button @click.prevent="addNewNote" class="button-regular">Submit</button>
     </section>
 
+    <section class="sort-section">
+      <label for="sort">Sort by:</label>
+      <select v-model="sortBy" @change="sortNotes" class="sort-dropdown">
+        <option value="all">All</option>
+        <option value="work">Work</option>
+        <option value="personal">Personal</option>
+      </select>
+    </section>
+
     <section>
       <ul v-if="notes.length > 0" class="note-list">
-        <li v-for="(note, i) in notes" :key="note.id" class="note-item">
+        <li v-for="(note, i) in sortedNotes" :key="note.id" class="note-item">
           <div class="button-wrapper">
             <button
               @click="removeTodo(i)"
@@ -85,13 +94,32 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 
 const notesCounter = ref(0);
 const userName = ref("");
 const newNote = ref("");
 const notes = ref([]);
 const selectedCategory = ref("work");
+const sortBy = ref("all");
+
+const sortedNotes = computed(() => {
+  if (sortBy.value === "all") {
+    return notes.value;
+  } else {
+    return notes.value.filter((note) => note.category === sortBy.value);
+  }
+});
+
+const sortNotes = () => {
+  if (sortBy.value === "all") return;
+
+  notes.value.sort((a, b) => {
+    if (a.category < b.category) return -1;
+    if (a.category > b.category) return 1;
+    return 0;
+  });
+};
 
 watch(
   notes,
@@ -131,10 +159,10 @@ onMounted(() => {
           "When did the future switch from being a promise to being a threat?",
         date: "2/8/2024 4:35:26 PM",
         username: "Chuck Palahniuk",
-        category: "personal",
+        category: "work",
       },
       {
-        id: 2,
+        id: 3,
         value: "We'll never be as young as we are tonight.",
         date: "2/8/2024 4:35:26 PM",
         username: "Chuck Palahniuk",
@@ -192,9 +220,11 @@ const removeTodo = (i) => {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/variables.scss";
+
 .top-section {
   padding-bottom: 20px;
-  border-bottom: 2px solid #42b983;
+  border-bottom: 2px solid $primary-color;
 
   h1 {
     text-transform: uppercase;
@@ -222,7 +252,7 @@ const removeTodo = (i) => {
     font-weight: 700;
     text-transform: uppercase;
     border: none;
-    border-bottom: 1px solid #2c3e50;
+    border-bottom: 1px solid $secondary-color;
     padding-bottom: 5px;
     outline: none;
   }
@@ -250,10 +280,10 @@ const removeTodo = (i) => {
     min-height: 100px;
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #2c3e50;
+    border: 1px solid $secondary-color;
     border-radius: 5px;
     resize: vertical;
-    outline-color: #42b983;
+    outline-color: $primary-color;
   }
 }
 
@@ -322,6 +352,33 @@ const removeTodo = (i) => {
         font-size: 14px;
         color: #666;
       }
+    }
+  }
+}
+
+.sort-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .sort-dropdown {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
   }
 }
