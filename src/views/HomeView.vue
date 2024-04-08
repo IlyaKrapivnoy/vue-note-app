@@ -27,7 +27,18 @@
       ></textarea>
       <button @click.prevent="addNewNote" class="button-regular">Submit</button>
     </section>
-    {{ notes }}
+
+    <section>
+      <ul class="note-list">
+        <li v-for="note in notes" :key="note.id" class="note-item">
+          <h3>{{ note.value }}</h3>
+          <div class="note-details">
+            <span class="note-date">{{ note.date }}</span>
+            <span class="note-username">{{ note.username }}</span>
+          </div>
+        </li>
+      </ul>
+    </section>
   </main>
 </template>
 
@@ -162,6 +173,33 @@ const addNewNote = () => {
 
   &:hover {
     background-color: #0056b3;
+  }
+}
+
+.note-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  .note-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+
+    .note-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .note-date,
+      .note-username {
+        font-size: 14px;
+        color: #666;
+      }
+    }
   }
 }
 </style>
