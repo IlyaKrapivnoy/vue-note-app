@@ -2,7 +2,7 @@
   <main>
     <section class="top-section">
       <h1>My Notes</h1>
-      <span class="top-section_counter">Total notes {{ notesCounter }}</span>
+      <span class="top-section_counter">Total notes: {{ notesCounter }}</span>
     </section>
     <section class="greeting">
       <h2 class="title">
@@ -23,8 +23,13 @@ watch(userName, (newVal) => {
   localStorage.setItem("userName", newVal);
 });
 
+watch(notesCounter, (newVal) => {
+  localStorage.setItem("notesCounter", newVal);
+});
+
 onMounted(() => {
   userName.value = localStorage.getItem("userName") || "";
+  notesCounter.value = localStorage.getItem("notesCounter") || 0;
 });
 </script>
 
