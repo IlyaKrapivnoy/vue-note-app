@@ -359,7 +359,7 @@ const toggleFavourite = (index) => {
 }
 
 .button-regular {
-  background-color: #007bff;
+  background-color: #626161;
   color: #fff;
   font-weight: 700;
   border: none;
@@ -369,12 +369,12 @@ const toggleFavourite = (index) => {
   transition: all 0.3s ease 0s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #151515;
   }
 }
 
 .button-danger {
-  background-color: #ff3753;
+  background-color: #e86e7f;
 
   &:hover {
     background-color: #de2a46;
@@ -382,11 +382,7 @@ const toggleFavourite = (index) => {
 }
 
 .button-success {
-  background-color: $primary-color;
-
-  &:hover {
-    background-color: #269663;
-  }
+  background-color: #000;
 }
 
 .button-small {
@@ -418,6 +414,15 @@ const toggleFavourite = (index) => {
 
     .note-content {
       min-height: 50px;
+
+      input {
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid $secondary-color;
+        border-radius: 5px;
+        outline: none;
+        width: 90%;
+      }
 
       h3 {
         @include ellipsis(400px);
