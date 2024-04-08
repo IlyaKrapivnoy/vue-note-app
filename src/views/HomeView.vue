@@ -130,7 +130,7 @@ const notesCounter = ref(0);
 const userName = ref("");
 const newNote = ref("");
 const notes = ref([]);
-const selectedCategory = ref("work");
+const selectedCategory = computed(() => store.state.selectedCategory);
 const sortBy = ref("all");
 const editIndex = ref(null);
 const editedNote = ref("");
@@ -173,6 +173,10 @@ watch(notesCounter, (newVal) => {
 
 watch(userName, (newVal) => {
   store.dispatch("updateUserName", newVal);
+});
+
+watch(selectedCategory, (newVal) => {
+  store.dispatch("updateSelectedCategory", newVal);
 });
 
 onMounted(() => {
