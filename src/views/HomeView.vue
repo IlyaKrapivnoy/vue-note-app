@@ -1,18 +1,30 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <main>
+    <section class="top-section">
+      <h1>My Notes</h1>
+      <span class="top-section_counter">Total notes {{ notesCounter }}</span>
+    </section>
+  </main>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<script setup>
+import { ref } from "vue";
 
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
+const notesCounter = ref(0);
+</script>
+
+<style scoped lang="scss">
+.top-section {
+  padding-bottom: 20px;
+  border-bottom: 2px solid #42b983;
+
+  h1 {
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  .top-section_counter {
+    font-weight: 800;
   }
 }
-</script>
+</style>
