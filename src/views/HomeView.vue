@@ -24,6 +24,7 @@
       ></textarea>
       <button @click.prevent="addNewNote" class="form-button">Submit</button>
     </section>
+    {{ notes }}
   </main>
 </template>
 
@@ -33,6 +34,7 @@ import { onMounted, ref, watch } from "vue";
 const notesCounter = ref(0);
 const userName = ref("");
 const newNote = ref("");
+const notes = ref([]);
 
 watch(userName, (newVal) => {
   localStorage.setItem("userName", newVal);
@@ -53,7 +55,20 @@ const addNewNote = () => {
     return;
   }
 
-  console.log("newNote", newNote.value);
+  for (let i = 0; i < notes.value.length; i++) {
+    if (newNote.value === notes.value[i].value) {
+      alert("You already have this task");
+      return;
+    }
+  }
+
+  notes.value.push({
+    id: notes.value.length + 1,
+    value: newNote.value,
+  });
+
+  notesCounter.value++;
+
   newNote.value = "";
 };
 </script>
