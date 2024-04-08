@@ -57,6 +57,9 @@ const reset = () => {
   notesCounter.value = 0;
 };
 
+const currentDate = new Date();
+const formattedDate = currentDate.toLocaleDateString("en-US");
+
 const addNewNote = () => {
   if (newNote.value === "") {
     alert("Please, enter text before submitting a note");
@@ -73,6 +76,7 @@ const addNewNote = () => {
   notes.value.push({
     id: notes.value.length + 1,
     value: newNote.value,
+    date: formattedDate,
   });
 
   notesCounter.value++;
