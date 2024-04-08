@@ -141,7 +141,8 @@ watch(notesCounter, (newVal) => {
 
 onMounted(() => {
   userName.value = localStorage.getItem("userName") || "";
-  notesCounter.value = localStorage.getItem("notesCounter") || 0;
+  notesCounter.value = parseInt(localStorage.getItem("notesCounter"), 10) || 0;
+
   notes.value = JSON.parse(localStorage.getItem("notes")) || [];
 
   if (notes.value.length === 0) {
