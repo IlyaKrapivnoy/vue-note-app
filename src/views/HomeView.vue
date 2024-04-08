@@ -59,6 +59,7 @@ const reset = () => {
 
 const currentDate = new Date();
 const formattedDate = currentDate.toLocaleDateString("en-US");
+const formattedTime = currentDate.toLocaleTimeString("en-US");
 
 const addNewNote = () => {
   if (newNote.value === "") {
@@ -76,7 +77,8 @@ const addNewNote = () => {
   notes.value.push({
     id: notes.value.length + 1,
     value: newNote.value,
-    date: formattedDate,
+    date: `${formattedDate} ${formattedTime}`,
+    username: userName.value,
   });
 
   notesCounter.value++;
