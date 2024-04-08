@@ -246,6 +246,7 @@ const toggleEditMode = (index) => {
 
 const saveEditedNote = () => {
   notes.value[editIndex.value].value = editedNote.value;
+  notes.value[editIndex.value].date = `${formattedDate} ${formattedTime}`; // this will update the date
   editIndex.value = null;
 };
 </script>
