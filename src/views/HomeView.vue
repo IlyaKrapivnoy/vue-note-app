@@ -39,6 +39,16 @@ const userName = ref("");
 const newNote = ref("");
 const notes = ref([]);
 
+watch(
+  notes,
+  (newVal) => {
+    localStorage.setItem("notes", JSON.stringify(newVal));
+  },
+  {
+    deep: true,
+  },
+);
+
 watch(userName, (newVal) => {
   localStorage.setItem("userName", newVal);
 });
@@ -50,6 +60,7 @@ watch(notesCounter, (newVal) => {
 onMounted(() => {
   userName.value = localStorage.getItem("userName") || "";
   notesCounter.value = localStorage.getItem("notesCounter") || 0;
+  notes.value = JSON.parse(localStorage.getItem("notes")) || [];
 });
 
 const reset = () => {
