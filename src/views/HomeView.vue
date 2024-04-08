@@ -29,8 +29,7 @@
           v-model="selectedCategory"
           class="category-item"
         />
-        <span class="bubble business"></span>
-        <div>Work</div>
+        Work
       </label>
       <label>
         <input
@@ -41,8 +40,7 @@
           v-model="selectedCategory"
           class="category-item"
         />
-        <span class="bubble business"></span>
-        <div>Personal</div>
+        Personal
       </label>
     </section>
 
@@ -69,26 +67,37 @@
         <li v-for="(note, i) in sortedNotes" :key="note.id" class="note-item">
           <div class="button-wrapper">
             <button
-              v-if="editIndex !== i"
-              @click="toggleEditMode(i)"
-              class="button-regular button-small"
+              @click="toggleFavourite(i)"
+              :class="{
+                'button-regular button-small button-success': note.favourite,
+                'button-regular button-small': !note.favourite,
+              }"
             >
-              Edit
+              Favourite
             </button>
-            <button
-              v-else
-              @click="saveEditedNote"
-              class="button-regular button-small button-success"
-            >
-              Save
-            </button>
-            <button
-              v-if="editIndex !== i"
-              @click="removeTodo(i)"
-              class="button-regular button-danger button-small"
-            >
-              x
-            </button>
+            <div class="button-wrapper-edit">
+              <button
+                v-if="editIndex !== i"
+                @click="toggleEditMode(i)"
+                class="button-regular button-small"
+              >
+                Edit
+              </button>
+              <button
+                v-else
+                @click="saveEditedNote"
+                class="button-regular button-small button-success"
+              >
+                Save
+              </button>
+              <button
+                v-if="editIndex !== i"
+                @click="removeTodo(i)"
+                class="button-regular button-danger button-small"
+              >
+                x
+              </button>
+            </div>
           </div>
           <div class="note-content">
             <h3 v-if="editIndex === i">
@@ -172,7 +181,8 @@ onMounted(() => {
         value: "The things you used to own, now they own you.",
         date: "4/8/2024 2:35:26 PM",
         username: "Chuck Palahniuk",
-        category: "personal",
+        category: "work",
+        favourite: true,
       },
       {
         id: 2,
@@ -181,6 +191,7 @@ onMounted(() => {
         date: "2/8/2024 4:35:26 PM",
         username: "Chuck Palahniuk",
         category: "work",
+        favourite: false,
       },
       {
         id: 3,
@@ -188,6 +199,31 @@ onMounted(() => {
         date: "2/8/2024 4:35:26 PM",
         username: "Chuck Palahniuk",
         category: "personal",
+        favourite: true,
+      },
+      {
+        id: 4,
+        value: "We'll never be as young as we are tonight.",
+        date: "2/8/2024 4:35:26 PM",
+        username: "Chuck Palahniuk",
+        category: "personal",
+        favourite: true,
+      },
+      {
+        id: 5,
+        value: "We'll never be as young as we are tonight.",
+        date: "2/8/2024 4:35:26 PM",
+        username: "Chuck Palahniuk",
+        category: "work",
+        favourite: true,
+      },
+      {
+        id: 6,
+        value: "We'll never be as young as we are tonight.",
+        date: "2/8/2024 4:35:26 PM",
+        username: "Chuck Palahniuk",
+        category: "personal",
+        favourite: false,
       },
     ];
     notes.value.push(...defaultNotes);
@@ -217,7 +253,7 @@ const addNewNote = () => {
 
   for (let i = 0; i < notes.value.length; i++) {
     if (newNote.value === notes.value[i].value) {
-      alert("You already have this task");
+      alert("This note already exists");
       return;
     }
   }
@@ -228,6 +264,7 @@ const addNewNote = () => {
     date: `${formattedDate} ${formattedTime}`,
     username: userName.value,
     category: selectedCategory.value,
+    favourite: false,
   });
 
   notesCounter.value++;
@@ -248,6 +285,10 @@ const saveEditedNote = () => {
   notes.value[editIndex.value].value = editedNote.value;
   notes.value[editIndex.value].date = `${formattedDate} ${formattedTime}`; // this will update the date
   editIndex.value = null;
+};
+
+const toggleFavourite = (index) => {
+  notes.value[index].favourite = !notes.value[index].favourite;
 };
 </script>
 
@@ -354,8 +395,13 @@ const saveEditedNote = () => {
 
 .button-wrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 10px;
+
+  .button-wrapper-edit {
+    display: flex;
+    gap: 10px;
+  }
 }
 
 .note-list {
