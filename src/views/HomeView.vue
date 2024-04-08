@@ -122,6 +122,9 @@
 
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const notesCounter = ref(0);
 const userName = ref("");
@@ -166,6 +169,10 @@ watch(userName, (newVal) => {
 
 watch(notesCounter, (newVal) => {
   localStorage.setItem("notesCounter", newVal);
+});
+
+watch(userName, (newVal) => {
+  store.dispatch("updateUserName", newVal);
 });
 
 onMounted(() => {
