@@ -9,6 +9,11 @@
 <style lang="scss">
 @import "@/styles/variables.scss";
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -16,6 +21,7 @@
   text-align: center;
   color: $secondary-color;
   list-style: none;
+  background-color: #131313;
 }
 
 ul {

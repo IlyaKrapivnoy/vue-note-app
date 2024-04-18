@@ -421,7 +421,8 @@ const toggleFavourite = (index) => {
 }
 
 .note-list {
-  padding: 0;
+  padding: 20px 40px;
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
