@@ -2,10 +2,7 @@
   <main>
     <section class="top-section">
       <h1>My Notes</h1>
-      <div class="counter-row">
-        <span class="counter">Total notes: {{ notesCounter }}</span>
-        <button @click="reset" class="button-regular">Reset</button>
-      </div>
+      <CounterView :counter="notesCounter" @reset="reset" />
     </section>
     <section class="greeting-section">
       <span class="title">
@@ -129,6 +126,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
+import CounterView from "@/components/CounterView.vue";
 
 const store = useStore();
 
@@ -314,7 +312,7 @@ const toggleFavourite = (index) => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "@/styles/variables.scss";
 @import "@/styles/mixins.scss";
 
