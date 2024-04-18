@@ -19,7 +19,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $secondary-color;
+  color: $white;
   list-style: none;
   background-color: #131313;
 }
@@ -34,7 +34,7 @@ nav {
 
   a {
     font-weight: bold;
-    color: $secondary-color;
+    color: $white;
 
     &.router-link-exact-active {
       color: $primary-color;
