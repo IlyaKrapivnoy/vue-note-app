@@ -1,7 +1,7 @@
 <template>
   <div class="counter-row">
     <span class="counter">Total notes: {{ counter }}</span>
-    <button @click="resetCounter" class="button-regular">Reset</button>
+    <el-button @click="resetCounter" type="info" plain>Reset</el-button>
   </div>
 </template>
 
