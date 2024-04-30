@@ -2,27 +2,16 @@
   <main>
     <section class="top-section">
       <h1>My Notes</h1>
-      <div class="counter-row">
-        <span class="counter">Total notes: {{ notesCounter }}</span>
-        <button @click="reset" class="button-regular">Reset</button>
-      </div>
+      <CounterView :counter="notesCounter" @reset="reset" />
     </section>
     <section class="greeting-section">
-      <span class="title">
-        Enter your username:
-        <input
-          type="text"
-          placeholder="Type here..."
-          v-model="userName"
-          class="username-input"
-        />
-        <button
-          @click="removeUsername"
-          class="button-regular button-danger button-small"
-        >
-          x
-        </button>
-      </span>
+      <input
+        type="text"
+        placeholder="Type your name..."
+        v-model="userName"
+        class="username-input"
+      />
+      <el-button @click="removeUsername" type="danger" :icon="Delete" circle />
     </section>
 
     <section class="category-section">
@@ -56,7 +45,7 @@
         placeholder="Enter your text here..."
         v-model="newNote"
       ></textarea>
-      <button @click.prevent="addNewNote" class="button-regular">Submit</button>
+      <el-button @click.prevent="addNewNote" type="info">Submit</el-button>
     </section>
 
     <section class="sort-section">
@@ -72,6 +61,7 @@
       <ul v-if="notes.length > 0" class="note-list">
         <li v-for="(note, i) in sortedNotes" :key="note.id" class="note-item">
           <div class="button-wrapper">
+            <!-- @todo: change fav -->
             <button
               @click="toggleFavourite(i)"
               :class="{
@@ -82,13 +72,10 @@
               Favourite
             </button>
             <div class="button-wrapper-edit">
-              <button
-                v-if="editIndex !== i"
-                @click="toggleEditMode(i)"
-                class="button-regular button-small"
-              >
+              <el-button v-if="editIndex !== i" @click="toggleEditMode(i)">
                 Edit
-              </button>
+              </el-button>
+
               <button
                 v-else
                 @click="saveEditedNote"
@@ -96,13 +83,23 @@
               >
                 Save
               </button>
-              <button
+              <el-button
+                v-else
+                @click="saveEditedNote"
+                type="success"
+                :icon="Check"
+                circle
+                plain
+              />
+
+              <el-button
                 v-if="editIndex !== i"
                 @click="removeTodo(i)"
-                class="button-regular button-danger button-small"
-              >
-                x
-              </button>
+                type="danger"
+                :icon="Delete"
+                circle
+                plain
+              />
             </div>
           </div>
           <div class="note-content">
@@ -129,6 +126,8 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
+import CounterView from "@/components/CounterView.vue";
+import { Delete, Check } from "@element-plus/icons-vue";
 
 const store = useStore();
 
@@ -314,7 +313,7 @@ const toggleFavourite = (index) => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "@/styles/variables.scss";
 @import "@/styles/mixins.scss";
 
@@ -338,6 +337,10 @@ const toggleFavourite = (index) => {
 }
 
 .greeting-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   margin: 40px 0;
 
   .username-input {
@@ -423,7 +426,8 @@ const toggleFavourite = (index) => {
 }
 
 .note-list {
-  padding: 0;
+  padding: 20px 40px;
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -432,7 +436,7 @@ const toggleFavourite = (index) => {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: $secondary-color;
 
     .note-content {
       min-height: 50px;
