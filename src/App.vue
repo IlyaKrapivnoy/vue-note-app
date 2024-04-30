@@ -4,7 +4,12 @@
     <router-link to="/tasks">Tasks</router-link>
   </nav>
   <router-view />
+  <Footer :footerText="'front-end vue test'" />
 </template>
+
+<script setup>
+import Footer from "../src/components/Footer.vue";
+</script>
 
 <style lang="scss">
 @import "@/styles/variables.scss";
